@@ -1,7 +1,6 @@
-#ifndef FACTORIAL_TESTS
-#define FACTORIAL_TESTS
+#ifndef FACTORIAL_TESTS_CPP
+#define FACTORIAL_TESTS_CPP
 
-#include <iostream>
 #include "../include/doctest.h"
 #include "../src/factorial.cpp"
 

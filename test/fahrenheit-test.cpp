@@ -1,12 +1,11 @@
-#ifndef FAHRENHEIT_TEST
-#define FAHRENHEIT_TEST
+#ifndef FAHRENHEIT_TESTS_CPP
+#define FAHRENHEIT_TESTS_CPP
 
 #include "../include/doctest.h"
 #include "../src/fahrenheit.cpp"
 
 TEST_CASE("Testando conversão de Fahrenheit para Celcius"){
-
-    CHECK(converte_grau(41)==5);
+    CHECK(toFahrennheit(41)==5);
 }
 
 #endif
