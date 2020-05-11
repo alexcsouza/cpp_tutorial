@@ -1,5 +1,6 @@
-# Created by https://www.gitignore.io/api/c++,cmake,valgrind
-# Edit at https://www.gitignore.io/?templates=c++,cmake,valgrind
+
+# Created by https://www.gitignore.io/api/c++,cmake,valgrind,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=c++,cmake,valgrind,visualstudiocode
 
 ### C++ ###
 # Prerequisites
@@ -69,7 +70,20 @@ massif.out.*
 bb.out
 bb.out.*
 
-# End of https://www.gitignore.io/api/c++,cmake,valgrind
+
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+# End of https://www.gitignore.io/api/c++,cmake,valgrind,visualstudiocode
 
 
 # Ignore the build and lib dirs
