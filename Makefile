@@ -29,6 +29,8 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 clean:
 	@echo " Running Clean"; 
 	@echo " $(RM) -r -f $(BUILDDIR) $(BINDIR) $(COVDIR)"; $(RM) -r $(BUILDDIR) $(BINDIR) $(COVDIR)
+	@echo " $(RM) -f *.gcno"; $(RM) -f *.gcno
+	@echo " $(RM) -f *.gcda"; $(RM) -f *.gcda
 	
 coverage: run-tests
 	@echo " Running Coverage"; 
