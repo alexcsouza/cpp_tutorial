@@ -6,7 +6,6 @@
 using namespace std;
 
 int factorial(int number) { 
-    cout << "Calling factorial: " << number << endl;
     return number <= 1 ? number : factorial(number - 1) * number; 
 }
 

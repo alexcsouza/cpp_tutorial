@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(int argc, char** argv){
-    cout << "[App]" << endl;
+    cout << "[App] " << argc << " " << *argv << endl;
     cout << "Factorial: " << factorial(argc) << endl;
     cout << "To Fahrenheit: " << toFahrennheit(argc) << endl;
     return 0;
