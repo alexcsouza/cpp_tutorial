@@ -5,7 +5,8 @@
 #include "../src/fahrenheit.cpp"
 
 TEST_CASE("Testando conversão de Fahrenheit para Celcius"){
-    CHECK(toFahrennheit(41)==5);
+    CHECK(toCelcius(41)==5);
+    CHECK(toCelcius(32)==0);
 }
 
 #endif
