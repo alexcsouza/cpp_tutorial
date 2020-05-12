@@ -28,19 +28,25 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 
 clean:
 	@echo " Running Clean"; 
-	@echo " $(RM) -r $(BUILDDIR) $(BINDIR) $(COVDIR)"; $(RM) -r $(BUILDDIR) $(BINDIR) $(COVDIR)
+	@echo " $(RM) -r -f $(BUILDDIR) $(BINDIR) $(COVDIR)"; $(RM) -r $(BUILDDIR) $(BINDIR) $(COVDIR)
 	
-coverage:
+coverage: run-tests
 	@echo " Running Coverage"; 
 	@mkdir -p $(COVDIR)
-	@echo " $(CC) $(SOURCES) $(CFLAGS) --coverage $(INC) -c -o  $(COVDIR)"; $(CC) $(SOURCES) $(CFLAGS) --coverage $(INC) -c -o $(COVDIR)
+	@mkdir -p $(COVDIR)/report
+#	@echo " $(CC) $(SOURCES) $(CFLAGS) --coverage $(INC) -o $(COVDIR)"; $(CC) $(SOURCES) $(CFLAGS) --coverage $(INC) -o $(COVDIR)
+	@echo " ./$(TESTTARGET)"; ./$(TESTTARGET)
+	@echo " $(MV) *.gcno $(COVDIR)";$(MV) *.gcno $(COVDIR)
+	@echo " $(MV) *.gcda $(COVDIR)";$(MV) *.gcda $(COVDIR)
+	@echo " $(shell lcov --no-external --capture --directory $(COVDIR) --output-file $(COVDIR)/report/coverage.info)";$(shell lcov --no-external --capture --directory . --output-file $(COVDIR)/report/coverage.info)
+	@echo " $(shell genhtml $(COVDIR)/report/coverage.info --output-directory $(COVDIR)/report)";$(shell genhtml $(COVDIR)/report/coverage.info --output-directory $(COVDIR)/report)
 
 # Tests
 tests: 
 	@echo " Running Tests"; 
 	@echo " $(RM) -f $(TESTTARGET)*"; $(RM) -f $(TESTTARGET)*
 	@mkdir -p $(BINDIR)
-	@echo " $(CC) $(CFLAGS) $(TESTSOURCES) $(INC) $(LIB) -o $(TESTTARGET)";$(CC) $(CFLAGS) $(TESTSOURCES) $(INC) $(LIB) -o $(TESTTARGET)
+	@echo " $(CC) $(CFLAGS) --coverage $(TESTSOURCES) $(INC) $(LIB) -o $(TESTTARGET)";$(CC) $(CFLAGS) --coverage $(TESTSOURCES) $(INC) $(LIB) -o $(TESTTARGET)
 	
 run: $(TARGET)
 	@echo " Running App"; 
