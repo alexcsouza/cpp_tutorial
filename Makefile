@@ -42,7 +42,6 @@ coverage: run-tests
 	lcov --no-external --capture --directory . --output-file $(COVDIR)/coverage.info
 	genhtml $(COVDIR)/coverage.info --output-directory $(COVDIR)
 
-# Tests
 tests: 
 	@echo " Running Tests"; 
 	@echo " $(RM) -f $(TESTTARGET)*"; $(RM) -f $(TESTTARGET)*
