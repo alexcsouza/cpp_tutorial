@@ -31,14 +31,15 @@ clean:
 	@echo " $(RM) -r -f $(BUILDDIR) $(BINDIR) $(COVDIR)"; $(RM) -r $(BUILDDIR) $(BINDIR) $(COVDIR)
 	@echo " $(RM) -f *.gcno"; $(RM) -f *.gcno
 	@echo " $(RM) -f *.gcda"; $(RM) -f *.gcda
+	@echo " $(RM) -f *.gcov"; $(RM) -f *.gcov
 	
 coverage: run-tests
 	@echo " Running Coverage"; 
 	@mkdir -p $(COVDIR)
+	@mv -f *.gcno $(COVDIR)
+	@mv -f *.gcda $(COVDIR)
 	@gcov -lpr $(TESTSRCDIR)/*.cpp -o $(COVDIR)
-	@mv *.gcno $(COVDIR)
-	@mv *.gcda $(COVDIR)
-	@mv *.gcov $(COVDIR)
+	@mv -f *.gcov $(COVDIR)
 	lcov --no-external --capture --directory . --output-file $(COVDIR)/coverage.info
 	genhtml $(COVDIR)/coverage.info --output-directory $(COVDIR)
 

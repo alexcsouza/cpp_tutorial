@@ -9,8 +9,8 @@ double toCelcius(double fahrenheit){
     return (fahrenheit - 32) * 5/9;
 }
 
-double toFahrennheit(double celcius){
-    return (9/5 * celcius) + 32;
+double toFahrenheit(double celcius){
+    return 1.8 * celcius + 32;
 }
 
 #endif
