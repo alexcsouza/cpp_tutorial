@@ -53,6 +53,8 @@ massif.out.*
 bb.out
 bb.out.*
 
+# Coverage
+coverage/*
 
 
 ### VisualStudioCode ###

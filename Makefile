@@ -35,13 +35,15 @@ clean:
 coverage: run-tests
 	@echo " Running Coverage"; 
 	@mkdir -p $(COVDIR)
-	@mkdir -p $(COVDIR)/report
+#	@mkdir -p $(COVDIR)
 #	@echo " $(CC) $(SOURCES) $(CFLAGS) --coverage $(INC) -o $(COVDIR)"; $(CC) $(SOURCES) $(CFLAGS) --coverage $(INC) -o $(COVDIR)
-	@echo " ./$(TESTTARGET)"; ./$(TESTTARGET)
-	@echo " $(MV) *.gcno $(COVDIR)";$(MV) *.gcno $(COVDIR)
-	@echo " $(MV) *.gcda $(COVDIR)";$(MV) *.gcda $(COVDIR)
-	@echo " $(shell lcov --no-external --capture --directory $(COVDIR) --output-file $(COVDIR)/report/coverage.info)";$(shell lcov --no-external --capture --directory . --output-file $(COVDIR)/report/coverage.info)
-	@echo " $(shell genhtml $(COVDIR)/report/coverage.info --output-directory $(COVDIR)/report)";$(shell genhtml $(COVDIR)/report/coverage.info --output-directory $(COVDIR)/report)
+#	@echo " ./$(TESTTARGET)"; ./$(TESTTARGET)
+	gcov -lpr $(TESTSRCDIR)/*.cpp -o $(COVDIR)
+	mv *.gcno $(COVDIR)
+	mv *.gcda $(COVDIR)
+	mv *.gcov $(COVDIR)
+	lcov --no-external --capture --directory . --output-file $(COVDIR)/coverage.info
+	genhtml $(COVDIR)/coverage.info --output-directory $(COVDIR)
 
 # Tests
 tests: 
@@ -60,44 +62,3 @@ run-tests: tests
 	
 
 .PHONY: clean
-
-
-#MAIN := main.cpp
-#TESTER := tests/main-tests.cpp
-
-#SRCEXT := cpp
-#SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
-#OBJECTS := $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-#TSTSOURCES := $(shell find $(TSTDIR) -type f -name *.$(SRCEXT))
-
-# -g debug, --coverage para cobertura
-#CFLAGS := --coverage -g -Wall -O3 -std=c++11
-#INC := -I include/ -I third_party/
-
-#$(OBJDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
-#	@mkdir -p $(@D)
-#	$(CC) $(CFLAGS) $(INC) -c -o $@ $<
-
-#main: $(OBJECTS)
-#	@mkdir -p $(BINDIR)
-#	$(CC) $(CFLAGS) $(INC) $(MAIN) $^ -o $(BINDIR)/main
-
-#tests: $(OBJECTS)
-#	@mkdir -p $(BINDIR)
-#	$(CC) $(CFLAGS) $(INC) $(TESTER) $(TSTSOURCES) $^ -o $(BINDIR)/tester
-#	$(BINDIR)/tester
-
-#all: main
-
-#run: main
-#	$(BINDIR)/main
-
-#coverage:
-#	@mkdir -p coverage/
-#	@gcov $(SOURCES) -rlpo build/
-#	@$(RM) *.gcda *.gcno
-
-#clean:
-#	$(RM) -r $(OBJDIR)/* $(BINDIR)/* coverage/* *.gcda *.gcno
-
-.PHONY: clean coverage
