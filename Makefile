@@ -35,13 +35,10 @@ clean:
 coverage: run-tests
 	@echo " Running Coverage"; 
 	@mkdir -p $(COVDIR)
-#	@mkdir -p $(COVDIR)
-#	@echo " $(CC) $(SOURCES) $(CFLAGS) --coverage $(INC) -o $(COVDIR)"; $(CC) $(SOURCES) $(CFLAGS) --coverage $(INC) -o $(COVDIR)
-#	@echo " ./$(TESTTARGET)"; ./$(TESTTARGET)
-	gcov -lpr $(TESTSRCDIR)/*.cpp -o $(COVDIR)
-	mv *.gcno $(COVDIR)
-	mv *.gcda $(COVDIR)
-	mv *.gcov $(COVDIR)
+	@gcov -lpr $(TESTSRCDIR)/*.cpp -o $(COVDIR)
+	@mv *.gcno $(COVDIR)
+	@mv *.gcda $(COVDIR)
+	@mv *.gcov $(COVDIR)
 	lcov --no-external --capture --directory . --output-file $(COVDIR)/coverage.info
 	genhtml $(COVDIR)/coverage.info --output-directory $(COVDIR)
 

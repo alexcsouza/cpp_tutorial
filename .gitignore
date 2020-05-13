@@ -53,9 +53,6 @@ massif.out.*
 bb.out
 bb.out.*
 
-# Coverage
-coverage/*
-
 
 ### VisualStudioCode ###
 .vscode/*
@@ -77,6 +74,9 @@ lib/*
 
 # Ignore any executables
 bin/*
+
+# Ignore coverage data
+coverage/*
 
 # Ignore Mac specific files
 .DS_Store
