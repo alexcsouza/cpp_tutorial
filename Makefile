@@ -21,7 +21,7 @@ $(TARGET): clean $(OBJECTS)
 	@echo " $(CC) build/main.o -o $(TARGET) $(LIB)"; $(CC) build/main.o -o $(TARGET) $(LIB)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT) 
-	@echo " Building"
+	@echo " Building " $@
 	@mkdir -p $(BUILDDIR)
 	@mkdir -p $(BINDIR)
 	@echo " $(CC) $(CFLAGS) -c $< $(INC) -o $@ "; $(CC) $(CFLAGS) -c $< $(INC) -o $@
@@ -35,20 +35,26 @@ clean:
 	
 coverage: run-tests
 	@echo " Running Coverage"; 
-	@mkdir -p $(COVDIR)
-	@mv -f *.gcno $(COVDIR)
-	@mv -f *.gcda $(COVDIR)
-	@gcov -lpr $(TESTSRCDIR)/*.cpp -o $(COVDIR)
-	@mv -f *.gcov $(COVDIR)
+	mkdir -p $(COVDIR)
+	mv -f *.gcno $(COVDIR)
+	mv -f *.gcda $(COVDIR)
+	gcov -lpr $(TESTSRCDIR)/*.cpp -o $(COVDIR)
+	mv -f *.gcov $(COVDIR)
 	lcov --no-external --capture --directory . --output-file $(COVDIR)/coverage.info
-	genhtml $(COVDIR)/coverage.info --output-directory $(COVDIR)
+	mkdir -p $(COVDIR)/report
+	genhtml $(COVDIR)/coverage.info --output-directory $(COVDIR)/report
 
 tests: 
 	@echo " Running Tests"; 
 	@echo " $(RM) -f $(TESTTARGET)*"; $(RM) -f $(TESTTARGET)*
 	@mkdir -p $(BINDIR)
-	@echo " $(CC) $(CFLAGS) --coverage $(TESTSOURCES) $(INC) $(LIB) -o $(TESTTARGET)";$(CC) $(CFLAGS) --coverage $(TESTSOURCES) $(INC) $(LIB) -o $(TESTTARGET)
-	
+	@echo " $(CC) $(CFLAGS) --coverage $(TESTSOURCES) $(LIB) -o $(TESTTARGET)";$(CC) $(CFLAGS) --coverage $(TESTSOURCES) $(LIB) -o $(TESTTARGET)
+
+check: 
+	@echo " Valgrid check"; 
+	@echo " valgrind -s --tool=memcheck --leak-check=yes --show-reachable=yes ./bin/app ./$(TESTTARGET) $(argc)"; valgrind -s --tool=memcheck --leak-check=yes --show-reachable=yes ./bin/app ./$(TESTTARGET) $(argc)
+
+
 run: $(TARGET)
 	@echo " Running App"; 
 	@echo " ./$(TARGET) $(argc)"; ./$(TARGET) $(argc)

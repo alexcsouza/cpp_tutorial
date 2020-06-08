@@ -5,12 +5,12 @@
 
 using namespace std;
 
-double toCelcius(double fahrenheit){
+double toCelsius(double fahrenheit){
     return (fahrenheit - 32) * 5/9;
 }
 
-double toFahrenheit(double celcius){
-    return 1.8 * celcius + 32;
+double toFahrenheit(double celsius){
+    return 1.8 * celsius + 32;
 }
 
 #endif
