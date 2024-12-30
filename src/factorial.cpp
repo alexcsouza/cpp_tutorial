@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int factorial(int number) { 
+double factorial(double number) { 
     return number <= 1 ? number : factorial(number - 1) * number; 
 }
 
